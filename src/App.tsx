@@ -1,3 +1,9 @@
+import { projectGrowth } from "./utils/calculate";
+
+console.log(
+  projectGrowth({ initialAmount: 100000, monthlyContribution: 50000, annualRate: 0, years: 5 })
+);
+
 export default function App() {
   return (
     <main>
