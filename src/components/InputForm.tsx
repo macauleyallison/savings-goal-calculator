@@ -23,15 +23,14 @@ export default function InputForm({ values, onChange }: Props) {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       {fields.map(({ name, label }) => (
-        <label key={name} style={{ display: "block", marginBottom: 12 }}>
-          {label}
+        <label key={name} className="field">
+          <span>{label}</span>
           <input
             type="number"
             min="0"
             inputMode="decimal"
             value={values[name]}
             onChange={(e) => onChange(name, e.target.value)}
-            style={{ display: "block", width: "100%" }}
           />
         </label>
       ))}

@@ -8,22 +8,32 @@ interface Props {
 
 export default function ResultsSummary({ rows, target }: Props) {
   const final = rows[rows.length - 1];
-  if (!final) return <p>Enter a duration of at least 1 year.</p>;
+  if (!final) return <p className="verdict">Enter a duration of at least 1 year.</p>;
 
-  const reachedIn = rows.find((row) => row.balance >= target);
+  const reachedIn = target > 0 ? rows.find((row) => row.balance >= target) : undefined;
+
+  let headline: string;
+  if (target <= 0) headline = "Set a savings target to see when you'll reach it.";
+  else if (reachedIn) headline = `You reach ${formatNaira(target)} in year ${reachedIn.year}.`;
+  else headline = `You'll be ${formatNaira(target - final.balance)} short after ${final.year} years.`;
 
   return (
-    <section>
-      <p>Total contributed: {formatNaira(final.contributed)}</p>
-      <p>Interest earned: {formatNaira(final.interest)}</p>
-      <p>Final balance: {formatNaira(final.balance)}</p>
-      <p>
-        {target <= 0
-          ? "Set a savings target to see when you'll reach it."
-          : reachedIn
-            ? `You reach your target in year ${reachedIn.year}.`
-            : `You fall short of your target by ${formatNaira(target - final.balance)}.`}
-      </p>
-    </section>
+    <div>
+      <p className={reachedIn ? "verdict hit" : "verdict"}>{headline}</p>
+      <dl className="figures">
+        <div>
+          <dt>You put in</dt>
+          <dd>{formatNaira(final.contributed)}</dd>
+        </div>
+        <div>
+          <dt>Interest earned</dt>
+          <dd>{formatNaira(final.interest)}</dd>
+        </div>
+        <div>
+          <dt>Final balance</dt>
+          <dd>{formatNaira(final.balance)}</dd>
+        </div>
+      </dl>
+    </div>
   );
 }

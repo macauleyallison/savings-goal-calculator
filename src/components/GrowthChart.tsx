@@ -25,11 +25,11 @@ export default function GrowthChart({ rows, target }: Props) {
       <ResponsiveContainer>
         <LineChart data={rows} margin={{ top: 8, right: 16, bottom: 8, left: 8 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="year"
-            label={{ value: "Year", position: "insideBottom", offset: -4 }}
-          />
-          <YAxis tickFormatter={(v) => `₦${(Number(v) / 1_000_000).toFixed(1)}M`} width={70} />
+          <YAxis
+  domain={[0, (dataMax: number) => Math.max(dataMax, target)]}
+  tickFormatter={(v) => `₦${(Number(v) / 1_000_000).toFixed(1)}M`}
+  width={70}
+/>
           <Tooltip formatter={(value) => formatNaira(Number(value))} labelFormatter={(y) => `Year ${y}`} />
           <Legend verticalAlign="top" />
           <Line type="monotone" dataKey="balance" name="Balance" stroke="#00A3E0" strokeWidth={2} dot={false} />
