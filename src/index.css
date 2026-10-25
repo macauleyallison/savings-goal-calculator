@@ -1,13 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap");
 
 :root {
-  --forest: #0f3b2e;
-  --forest-2: #16503e;
-  --leaf: #5fbf8a;
-  --paper: #eef2ef;
+  --bg: #eef2ef;
+  --panel: #0f3b2e;
+  --panel-text: #ffffff;
+  --panel-muted: rgba(255, 255, 255, 0.72);
+  --panel-line: rgba(255, 255, 255, 0.35);
   --ink: #10211a;
   --muted: #5b6e65;
   --line: #cfd9d3;
+  --accent: #16503e;
+  --accent-bright: #5fbf8a;
+  --balance: #16503e;
+  --contrib: #9aa9a1;
+  --target: #e0a100;
+  --tooltip-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0c16;
+  --panel: #181327;
+  --panel-text: #f4f1ff;
+  --panel-muted: rgba(244, 241, 255, 0.65);
+  --panel-line: rgba(244, 241, 255, 0.25);
+  --ink: #f4f1ff;
+  --muted: #a79fc4;
+  --line: #2c2545;
+  --accent: #5df2c0;
+  --accent-bright: #5df2c0;
+  --balance: #5df2c0;
+  --contrib: #7f78a3;
+  --target: #ff6b9d;
+  --tooltip-bg: #1d1733;
 }
 
 * {
@@ -17,9 +42,10 @@
 body {
   margin: 0;
   font-family: Figtree, system-ui, sans-serif;
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
   line-height: 1.5;
+  transition: background-color 0.25s, color 0.25s;
 }
 
 .layout {
@@ -29,21 +55,43 @@ body {
 }
 
 .panel {
-  background: var(--forest);
-  color: #fff;
-  padding: 2.5rem 2rem;
+  background: var(--panel);
+  color: var(--panel-text);
+  padding: 2rem;
+  transition: background-color 0.25s;
+}
+
+.theme-toggle {
+  margin-bottom: 1.75rem;
+  padding: 0.35rem 0.9rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--panel-text);
+  background: transparent;
+  border: 1px solid var(--panel-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-bright);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
 }
 
 .panel h1 {
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 2rem;
-  line-height: 1.1;
+  font-size: 2.1rem;
+  line-height: 1.05;
   margin: 0 0 0.5rem;
 }
 
 .lede {
   margin: 0 0 2rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--panel-muted);
 }
 
 .field {
@@ -53,7 +101,7 @@ body {
 
 .field span {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--panel-muted);
 }
 
 .field input {
@@ -63,17 +111,17 @@ body {
   font: inherit;
   font-size: 1.3rem;
   font-variant-numeric: tabular-nums;
-  color: #fff;
+  color: var(--panel-text);
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid var(--panel-line);
   border-radius: 0;
 }
 
 .field input:focus {
   outline: none;
-  border-bottom-color: var(--leaf);
-  box-shadow: 0 2px 0 var(--leaf);
+  border-bottom-color: var(--accent-bright);
+  box-shadow: 0 2px 0 var(--accent-bright);
 }
 
 .field input::-webkit-outer-spin-button,
@@ -94,13 +142,13 @@ body {
 .verdict {
   font-family: "Bricolage Grotesque", sans-serif;
   font-weight: 700;
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  line-height: 1.1;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.05;
   margin: 0 0 1.75rem;
 }
 
 .verdict.hit {
-  color: var(--forest-2);
+  color: var(--accent);
 }
 
 .figures {
@@ -124,6 +172,29 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+.figures div:last-child dd {
+  color: var(--accent);
+}
+
+.chart {
+  width: 100%;
+  height: 320px;
+  margin-top: 1.5rem;
+}
+
+.recharts-cartesian-grid line {
+  stroke: var(--line);
+}
+
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: var(--line);
+}
+
+.recharts-text {
+  fill: var(--muted);
+}
+
 @media (max-width: 800px) {
   .layout {
     grid-template-columns: 1fr;
@@ -131,5 +202,12 @@ body {
   .panel,
   .results {
     padding: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .panel {
+    transition: none;
   }
 }

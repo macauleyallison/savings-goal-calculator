@@ -11,11 +11,12 @@ export default function ResultsSummary({ rows, target }: Props) {
   if (!final) return <p className="verdict">Enter a duration of at least 1 year.</p>;
 
   const reachedIn = target > 0 ? rows.find((row) => row.balance >= target) : undefined;
+  const yearWord = final.year === 1 ? "year" : "years";
 
   let headline: string;
-  if (target <= 0) headline = "Set a savings target to see when you'll reach it.";
-  else if (reachedIn) headline = `You reach ${formatNaira(target)} in year ${reachedIn.year}.`;
-  else headline = `You'll be ${formatNaira(target - final.balance)} short after ${final.year} years.`;
+  if (target <= 0) headline = "Set a goal amount to see when you'll hit it.";
+  else if (reachedIn) headline = `You hit ${formatNaira(target)} in year ${reachedIn.year}.`;
+  else headline = `You're ${formatNaira(target - final.balance)} short after ${final.year} ${yearWord}.`;
 
   return (
     <div>
