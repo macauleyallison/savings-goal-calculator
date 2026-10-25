@@ -1,6 +1,6 @@
-import ResultsSummary from "./components/ResultsSummary";
 import { useMemo, useState } from "react";
 import InputForm, { type FormValues } from "./components/InputForm";
+import ResultsSummary from "./components/ResultsSummary";
 import { projectGrowth } from "./utils/calculate";
 
 export default function App() {
@@ -25,10 +25,12 @@ export default function App() {
       }),
     [values]
   );
+
   return (
     <main style={{ maxWidth: 480, margin: "2rem auto", padding: "0 1rem" }}>
       <h1>Savings Goal Calculator</h1>
       <InputForm values={values} onChange={handleChange} />
       <ResultsSummary rows={rows} target={Number(values.target) || 0} />
+    </main>
   );
 }
