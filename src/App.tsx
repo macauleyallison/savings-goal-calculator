@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import GrowthChart from "./components/GrowthChart";
 import InputForm, { type FormValues } from "./components/InputForm";
 import ResultsSummary from "./components/ResultsSummary";
 import { projectGrowth } from "./utils/calculate";
@@ -26,11 +27,14 @@ export default function App() {
     [values]
   );
 
+  const target = Number(values.target) || 0;
+
   return (
     <main style={{ maxWidth: 480, margin: "2rem auto", padding: "0 1rem" }}>
       <h1>Savings Goal Calculator</h1>
       <InputForm values={values} onChange={handleChange} />
-      <ResultsSummary rows={rows} target={Number(values.target) || 0} />
+      <ResultsSummary rows={rows} target={target} />
+      <GrowthChart rows={rows} target={target} />
     </main>
   );
 }
